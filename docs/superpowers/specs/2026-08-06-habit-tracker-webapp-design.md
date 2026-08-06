@@ -1,5 +1,6 @@
-# Habit Tracker Web App — Diseño
+# ICM-IA — HABIT TRACK · Diseño
 
+**Nombre de la app:** ICM-IA — HABIT TRACK
 **Fecha:** 2026-08-06
 **Estado:** Aprobado (diseño) — pendiente plan de implementación
 **Origen:** Migración de una plantilla de Google Sheets a una web app.
