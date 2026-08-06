@@ -26,7 +26,12 @@ export function WeeklyHabits({ habitsApi, completionsApi, year, month }: Props) 
           <div key={h.id} className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <strong>{h.name}</strong>
-              <span style={{ color: 'var(--accent)' }}>🔥 {streak}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ color: 'var(--accent)' }}>🔥 {streak}</span>
+                <button onClick={() => { if (confirm(`¿Eliminar "${h.name}"?`)) habitsApi.archive(h.id) }}
+                  aria-label="Eliminar hábito"
+                  style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: 16 }}>🗑️</button>
+              </div>
             </div>
             <div style={{ color: 'var(--muted)', fontSize: 13 }}>{thisWeekCount}/{h.goal} esta semana</div>
             <HabitCalendar year={year} month={month} done={done} color={h.color}

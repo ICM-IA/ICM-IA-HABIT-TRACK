@@ -28,4 +28,11 @@ describe('stats', () => {
     expect(ranked[0].habit.id).toBe('b')
     expect(ranked[1].habit.id).toBe('a')
   })
+  it('scales weekly habit progress by weeks in the month', () => {
+    const h = habit({ type: 'weekly', goal: 2 }) // ~2/week * (31/7 ≈ 4.43) ≈ 8.86 target in Aug
+    const done = new Set(['2026-08-03','2026-08-05','2026-08-10','2026-08-12']) // 4 done
+    const p = monthProgress(h, done, 2026, 8)
+    expect(p).toBeGreaterThan(0.4)
+    expect(p).toBeLessThan(0.5)
+  })
 })

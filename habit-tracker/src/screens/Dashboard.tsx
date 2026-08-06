@@ -29,7 +29,8 @@ export function Dashboard({ habitsApi, completionsApi, year, month }: Props) {
   const cumulative = values.reduce<number[]>((acc, v, i) => [...acc, (acc[i - 1] ?? 0) + v], [])
   const labels = dates.map((d) => d.slice(-2))
   const monthTotal = values.reduce((a, b) => a + b, 0)
-  const monthGoal = habits.reduce((a, h) => a + (h.type === 'daily' ? h.goal : 0), 0)
+  const weeksInMonth = dates.length / 7
+  const monthGoal = habits.reduce((a, h) => a + (h.type === 'daily' ? h.goal : h.goal * weeksInMonth), 0)
 
   const top = rankHabits(habits, byHabit, year, month).slice(0, 10)
 

@@ -25,16 +25,16 @@ export function useHabits(userId: string) {
   }, [userId, load])
 
   const create = useCallback(async (input: HabitInput) => {
-    await supabase.from('habits').insert({ ...input, user_id: userId, sort_order: habits.length })
-  }, [userId, habits.length])
-
-  const update = useCallback(async (id: string, patch: Partial<HabitInput>) => {
-    await supabase.from('habits').update(patch).eq('id', id)
-  }, [])
+    const { error } = await supabase.from('habits').insert({ ...input, user_id: userId, sort_order: habits.length })
+    if (error) console.error('create habit failed', error)
+    await load()
+  }, [userId, habits.length, load])
 
   const archive = useCallback(async (id: string) => {
-    await supabase.from('habits').update({ archived: true }).eq('id', id)
-  }, [])
+    const { error } = await supabase.from('habits').update({ archived: true }).eq('id', id)
+    if (error) console.error('archive habit failed', error)
+    await load()
+  }, [load])
 
-  return { habits, create, update, archive }
+  return { habits, create, archive }
 }

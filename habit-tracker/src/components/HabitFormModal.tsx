@@ -32,7 +32,7 @@ export function HabitFormModal({ onClose, onSave }: {
             color: 'var(--text)', border: '1px solid var(--border)', borderRadius: 10 }} />
         <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
           {(['daily', 'weekly'] as HabitType[]).map((t) => (
-            <button key={t} onClick={() => setType(t)} style={{
+            <button key={t} onClick={() => { setType(t); if (t === 'weekly') setGoal((g) => Math.min(g, 7)) }} style={{
               flex: 1, padding: 10, borderRadius: 10, border: '1px solid var(--border)',
               background: type === t ? 'var(--accent)' : 'var(--bg)',
               color: type === t ? '#fff' : 'var(--text)',
@@ -42,7 +42,8 @@ export function HabitFormModal({ onClose, onSave }: {
         <label style={{ color: 'var(--muted)', fontSize: 13 }}>
           Meta ({type === 'daily' ? 'días por mes' : 'días por semana'})
         </label>
-        <input type="number" min={1} value={goal} onChange={(e) => setGoal(Number(e.target.value))}
+        <input type="number" min={1} max={type === 'weekly' ? 7 : 31} value={goal}
+          onChange={(e) => setGoal(Math.max(1, Math.min(type === 'weekly' ? 7 : 31, Number(e.target.value))))}
           style={{ width: '100%', padding: 12, margin: '6px 0 12px', background: 'var(--bg)',
             color: 'var(--text)', border: '1px solid var(--border)', borderRadius: 10 }} />
         <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
