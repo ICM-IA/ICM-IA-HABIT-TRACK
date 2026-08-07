@@ -135,7 +135,7 @@ Todas con tests unitarios (patrón actual: Vitest).
 
 ## 6. Paleta / estilo
 
-Se mantiene **negro/rojo** actual. El "color por semana" (rojo/violeta/azul/amarillo/verde) se usa **solo como acento sutil** en bordes/encabezados de semana, no como fondo saturado, para no romper la identidad negro/rojo. (A confirmar: ¿querés los 5 colores fuertes como la planilla, o versión sobria?)
+Fondo/identidad de la app: **negro/rojo**. Dentro de la **grilla mensual**, cada bloque de semana usa su **color fuerte** (Sem1 rojo, Sem2 violeta, Sem3 azul, Sem4 amarillo, Sem5 verde) en encabezados y bordes de columna, como la planilla original. El rojo sigue siendo el acento global (botones, %, donut).
 
 ---
 
@@ -151,17 +151,19 @@ Cada fase deja la app funcionando y desplegable.
 
 ---
 
-## 8. Decisiones tomadas / supuestos (REVISAR)
+## 8. Decisiones (CONFIRMADAS)
 
-1. **Meta faltante:** si un hábito/mes no tiene fila en `habit_goals`, la meta es **0** (no cuenta). ¿O querés que herede una meta default?
-2. **Hábitos semanales:** se marcan **binario por semana** (5 slots/mes); la meta semanal = cantidad de semanas objetivo del mes. ¿Está bien binario, o necesitás contar veces por semana?
-3. **NOTAS:** texto libre por mes (una tabla o campo `notes` por user/mes). ¿Lo querés, o lo dejamos para después?
-4. **Colores de semana:** acento sutil vs 5 colores fuertes (§6).
-5. **Racha:** actual + más larga por hábito diario. Semanales sin racha (o agregarla).
+1. **Meta faltante → hereda meta default.** Cada hábito tiene una meta base (`habits.goal`). Esa meta se aplica a todos los meses de la ventana automáticamente; en la grilla de Objetivos podés sobrescribir el valor de cualquier mes (eso crea/actualiza la fila en `habit_goals`). Celda sin override = meta default. Esto acelera la carga: cargás la base una vez y ajustás solo los meses distintos.
+2. **Hábitos semanales → contar veces por semana.** Por cada semana (bloque del mes) se cuenta cuántas veces se hizo (ej. 3 de 4). El marcado semanal cuenta completions dentro del bloque de semana; la meta es "veces por semana" (`habits.goal`). Progreso semanal = `hechas / meta`.
+3. **Colores de semana → 5 colores fuertes.** Cada bloque de semana usa su color saturado bien visible en la grilla (rojo/violeta/azul/amarillo/verde), como la planilla. El rojo sigue siendo el acento principal de la app; los otros colores viven dentro de la grilla mensual.
+4. **NOTAS:** se incluye — texto libre por mes (campo `notes` en `settings`… no, por mes → tabla/campo por user+year+month). Simple, autosave.
+5. **Racha:** diarios muestran **racha actual + racha más larga**. Semanales sin racha por ahora.
+6. **Ventana:** 12 meses desde la fecha de inicio, pero con navegación de mes para ver cualquier mes de la ventana.
 
-## 9. Preguntas abiertas
-- ¿La ventana es siempre 12 meses, o querés poder ver años anteriores/siguientes?
-- ¿Los objetivos se cargan a mano celda por celda, o querés un "rellenar todos los meses con este valor" para cargar rápido?
+## 9. Implicancia del punto 1 y 2 en el modelo
+
+- `habit_goals` guarda **solo los overrides**. El cálculo de "objetivo del mes" = `habit_goals.target` si existe la fila, si no `habits.goal`. Menos filas, carga más rápida.
+- Semanales: el "target por semana" también sale de `habits.goal` (o su override mensual /  cantidad de semanas). Se cuenta con las completions del bloque.
 
 ---
 
