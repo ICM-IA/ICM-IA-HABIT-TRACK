@@ -22,10 +22,11 @@ export function DailyHabits({ habitsApi, completionsApi, year, month }: Props) {
         const done = completionsApi.byHabit[h.id] ?? new Set<string>()
         const streak = computeDailyStreak(done, today)
         const count = monthCompletionCount(done, year, month)
+        const pct = h.goal ? Math.min(100, Math.round((count / h.goal) * 100)) : 0
         return (
           <div key={h.id} className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <strong>{h.name}</strong>
+              <strong style={{ display: 'flex', alignItems: 'center' }}><span className="accent-bar" />{h.name}</strong>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ color: 'var(--accent)' }}>🔥 {streak}</span>
                 <button onClick={() => { if (confirm(`¿Eliminar "${h.name}"?`)) habitsApi.archive(h.id) }}
@@ -33,7 +34,10 @@ export function DailyHabits({ habitsApi, completionsApi, year, month }: Props) {
                   style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: 16 }}>🗑️</button>
               </div>
             </div>
-            <div style={{ color: 'var(--muted)', fontSize: 13 }}>{count}/{h.goal} este mes</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--muted)', fontSize: 13, margin: '10px 0 6px' }}>
+              <span>{count}/{h.goal} este mes</span><span style={{ color: 'var(--accent)' }}>{pct}%</span>
+            </div>
+            <div className="pbar-track"><div className="pbar-fill" style={{ width: `${pct}%` }} /></div>
             <HabitCalendar year={year} month={month} done={done} color={h.color}
               onToggle={(date, isDone) => completionsApi.toggle(h.id, date, isDone)} />
           </div>
