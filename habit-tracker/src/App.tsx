@@ -35,7 +35,7 @@ function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div>
             <strong style={{ fontSize: 18 }}>ICM-IA</strong>
-            <span style={{ letterSpacing: 2, color: 'var(--accent)', fontSize: 11, marginLeft: 6 }}>HABIT TRACK</span>
+            <span style={{ letterSpacing: 2, color: 'var(--accent)', fontSize: 11, marginLeft: 6 }}>HABIT TRACKER</span>
           </div>
           <button onClick={() => setShowSettings(true)} aria-label="Ajustes"
             style={{ background: 'none', border: 'none', fontSize: 20 }}>⚙️</button>

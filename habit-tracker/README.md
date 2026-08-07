@@ -1,4 +1,4 @@
-# ICM-IA — HABIT TRACK
+# ICM-IA HABIT TRACKER
 
 App de seguimiento de hábitos, mobile-first, con sincronización entre dispositivos.
 React + TypeScript + Vite · Supabase (Postgres + Auth Google + Realtime) · Chart.js · PWA instalable.

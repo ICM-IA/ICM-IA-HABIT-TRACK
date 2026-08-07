@@ -10,8 +10,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'ICM-IA Habit Track',
-        short_name: 'Habit Track',
+        name: 'ICM-IA HABIT TRACKER',
+        short_name: 'Habit Tracker',
         theme_color: '#0a0a0a',
         background_color: '#0a0a0a',
         display: 'standalone',
