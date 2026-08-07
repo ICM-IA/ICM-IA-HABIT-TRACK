@@ -5,6 +5,7 @@ import { useHabits } from './data/useHabits'
 import { useCompletions } from './data/useCompletions'
 import { useGoals } from './data/useGoals'
 import { useSettings } from './data/useSettings'
+import { useNotes } from './data/useNotes'
 import { AuthGate } from './components/AuthGate'
 import { TabBar, type Tab } from './components/TabBar'
 import { HabitFormModal } from './components/HabitFormModal'
@@ -27,6 +28,7 @@ function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
   const completionsApi = useCompletions(user.id)
   const goalsApi = useGoals(user.id)
   const settingsApi = useSettings(user.id)
+  const notesApi = useNotes(user.id)
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth() + 1)
@@ -50,7 +52,7 @@ function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
         {tab === 'dashboard' && <Dashboard habitsApi={habitsApi} completionsApi={completionsApi} goalsApi={goalsApi} settingsApi={settingsApi} />}
         {tab === 'daily' && <DailyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
         {tab === 'weekly' && <WeeklyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
-        {tab === 'monthly' && <MonthlyView habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} onMonthChange={(y, m) => { setYear(y); setMonth(m) }} />}
+        {tab === 'monthly' && <MonthlyView habitsApi={habitsApi} completionsApi={completionsApi} goalsApi={goalsApi} notesApi={notesApi} year={year} month={month} onMonthChange={(y, m) => { setYear(y); setMonth(m) }} />}
       </div>
 
       <button className="btn-accent" onClick={() => setShowForm(true)} aria-label="Nuevo hábito"
