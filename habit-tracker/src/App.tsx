@@ -3,10 +3,13 @@ import type { User } from '@supabase/supabase-js'
 import { useAuth } from './data/useAuth'
 import { useHabits } from './data/useHabits'
 import { useCompletions } from './data/useCompletions'
+import { useGoals } from './data/useGoals'
+import { useSettings } from './data/useSettings'
 import { AuthGate } from './components/AuthGate'
 import { TabBar, type Tab } from './components/TabBar'
 import { HabitFormModal } from './components/HabitFormModal'
 import { SettingsSheet } from './components/SettingsSheet'
+import { Objetivos } from './screens/Objetivos'
 import { Dashboard } from './screens/Dashboard'
 import { DailyHabits } from './screens/DailyHabits'
 import { WeeklyHabits } from './screens/WeeklyHabits'
@@ -22,10 +25,12 @@ export default function App() {
 function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
   const habitsApi = useHabits(user.id)
   const completionsApi = useCompletions(user.id)
+  const goalsApi = useGoals(user.id)
+  const settingsApi = useSettings(user.id)
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth() + 1)
-  const [tab, setTab] = useState<Tab>('dashboard')
+  const [tab, setTab] = useState<Tab>('objetivos')
   const [showForm, setShowForm] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
 
@@ -41,6 +46,7 @@ function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
             style={{ background: 'none', border: 'none', fontSize: 20 }}>⚙️</button>
         </header>
 
+        {tab === 'objetivos' && <Objetivos habitsApi={habitsApi} goalsApi={goalsApi} settingsApi={settingsApi} />}
         {tab === 'dashboard' && <Dashboard habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
         {tab === 'daily' && <DailyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
         {tab === 'weekly' && <WeeklyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}

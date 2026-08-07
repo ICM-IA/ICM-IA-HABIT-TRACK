@@ -20,6 +20,19 @@ export function computeDailyStreak(done: Set<string>, today: string): number {
   return streak
 }
 
+/** Longest run of consecutive calendar days ever completed. */
+export function longestStreak(done: Set<string>): number {
+  if (done.size === 0) return 0
+  const sorted = [...done].sort()
+  let best = 1
+  let cur = 1
+  for (let i = 1; i < sorted.length; i++) {
+    cur = sorted[i] === addDays(sorted[i - 1], 1) ? cur + 1 : 1
+    if (cur > best) best = cur
+  }
+  return best
+}
+
 /** Consecutive weeks (Mon-start) with at least `goal` completions, ending this week. */
 export function computeWeeklyStreak(done: Set<string>, goal: number, today: string): number {
   const counts = new Map<string, number>()

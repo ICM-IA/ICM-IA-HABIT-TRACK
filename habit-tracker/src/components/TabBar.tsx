@@ -1,9 +1,10 @@
-export type Tab = 'dashboard' | 'daily' | 'weekly' | 'monthly'
+export type Tab = 'objetivos' | 'dashboard' | 'monthly' | 'daily' | 'weekly'
 const tabs: { id: Tab; label: string; icon: string }[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+  { id: 'objetivos', label: 'Objetivos', icon: '🎯' },
+  { id: 'dashboard', label: 'Panel', icon: '📊' },
+  { id: 'monthly', label: 'Mensual', icon: '📆' },
   { id: 'daily', label: 'Diarios', icon: '📅' },
   { id: 'weekly', label: 'Semanales', icon: '🗓️' },
-  { id: 'monthly', label: 'Mensual', icon: '📆' },
 ]
 export function TabBar({ active, onChange }: { active: Tab; onChange: (t: Tab) => void }) {
   return (
