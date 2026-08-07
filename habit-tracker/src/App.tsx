@@ -47,7 +47,7 @@ function AuthedApp({ user, onSignOut }: { user: User; onSignOut: () => void }) {
         </header>
 
         {tab === 'objetivos' && <Objetivos habitsApi={habitsApi} goalsApi={goalsApi} settingsApi={settingsApi} />}
-        {tab === 'dashboard' && <Dashboard habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
+        {tab === 'dashboard' && <Dashboard habitsApi={habitsApi} completionsApi={completionsApi} goalsApi={goalsApi} settingsApi={settingsApi} />}
         {tab === 'daily' && <DailyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
         {tab === 'weekly' && <WeeklyHabits habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} />}
         {tab === 'monthly' && <MonthlyView habitsApi={habitsApi} completionsApi={completionsApi} year={year} month={month} onMonthChange={(y, m) => { setYear(y); setMonth(m) }} />}
